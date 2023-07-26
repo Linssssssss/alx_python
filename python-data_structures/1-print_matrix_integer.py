@@ -1,11 +1,8 @@
 def print_matrix_integer(matrix=[[]]):
     # Get the number of rows and columns in the matrix
-    num_rows = len(matrix)
-    num_cols = len(matrix[0]) if num_rows > 0 else 0
-
-    for i in range(num_rows):
-        for j in range(num_rows):
-            print("{:d}".format(matrix[i][j]), end="")
-            if j < num_cols - 1:
-                print(" ", end="")
-                print()
+    for row in matrix:
+        for col in row:
+            # Print each integer in the matrix with proper formatting
+            print("{:d}".format(col), end=" " if col != row[-1] else "")
+            print() #Move to the next line after each row
+            
