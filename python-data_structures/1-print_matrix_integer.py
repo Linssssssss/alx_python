@@ -5,4 +5,3 @@ def print_matrix_integer(matrix=[[]]):
             # Print each integer in the matrix with proper formatting
             print("{:d}".format(col), end=" " if col != row[-1] else "")
             print() #Move to the next line after each row
-            
