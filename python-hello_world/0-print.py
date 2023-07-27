@@ -1,1 +1,1 @@
-print('"Programming is like building a multilingual puzzle', end='')
+print('"Programming is like building a multilingual puzzle', end=' ')
