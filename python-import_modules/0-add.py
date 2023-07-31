@@ -1,22 +1,8 @@
-# Assign values to variables a and b
-a = 1
-b = 2
+if __name__ == "__main__":
+    """Print the sum of 1 and 2."""
+    from add_0 import add
 
-# Define the add function
-def add(a, b):
-    """My addition function
-
-    Args:
-        a: first integer
-        b: second integer
-
-    Returns:
-        The return value. a + b
-    """
-    return (a + b)
-
-# Calculate the result using the add function
-result = add(a, b)
-
-# Print the result using string formatting
-print(f"{a} + {b} = {result}")
+    a = 1
+    b = 2
+    
+    
