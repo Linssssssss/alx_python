@@ -1,14 +1,13 @@
-import sys
+if __name__ == "__main__":
+    """Print the number of and list of arguments."""
+    import sys
 
-# Retrieve the number of arguments passed to the script
-num_args = len(sys.argv) - 1
-
-# Print the number of arguments
-print("Number of argument{}: {}".format('s' if num_args != 1 else '', num_args), end='')
-
-# Print whether it's "argument" or "arguments" and add a new line
-print(" argument{}:".format('' if num_args == 1 else 's'))
-
-# Print each argument with its position
-for i, arg in enumerate(sys.argv[1:], 1):
-    print("{}: {}".format(i, arg))
+    count = len(sys.argv) - 1
+    if count == 0:
+        print("0 arguments.")
+    elif count == 1:
+        print("1 argument:")
+    else:
+        print("{} arguments:".format(count))
+        for i in range(count):
+            print("{}: {}".format(i + 1, sys.argv[i + 1]))
