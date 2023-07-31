@@ -1,3 +1,3 @@
-for i in range(10):
-    for j in range(i + 1, 10):
-        print("{:d}{:d}".format(i, j), end=", "if i != 8 or j != 8 or j != 9 else "\n")
+for tens_digit in range(10):
+    for units_digit in range(tens_digit + 1, 10):
+        print(f"{tens_digit}{units_digit}", end=", " if tens_digit != 8 or units_digit != 9 else "\n")
