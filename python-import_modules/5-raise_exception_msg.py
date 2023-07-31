@@ -1,8 +1,10 @@
-def raise_exception_msg(message=""):
-    try:
-        raise NameError(message)
-    except NameError as e:
-        print(f"Name error occurred: {e}")
+#!/usr/bin/python3
 
-raise_exception_msg("This is a custom name exception.")
+def raise_exception_msg(message=""):
+    raise NameError(message)
+
+try:
+    raise_exception_msg("C is fun")
+except NameError as ne:
+    print(ne)
     
