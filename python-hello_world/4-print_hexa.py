@@ -8,5 +8,3 @@ for num in range(99):
     # Append the number in decimal and hexadecimal format to the output string
     output += f"{num} = 0x{num:x}\n"
 
-# Print the output string
-print(output, end="")
