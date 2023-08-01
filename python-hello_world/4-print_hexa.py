@@ -1,10 +1,5 @@
 #!/usr/bin/env python3
 
-# Initialize an empty string to store the output
-output = ""
-
-# Loop through numbers from 0 to 98 (inclusive)
+# Loop through numbers from 0 to 98 (inclusive) and directly print them with hexadecimal representation
 for num in range(99):
-    # Append the number in decimal and hexadecimal format to the output string
-    output += f"{num} = 0x{num:x}\n"
-
+    print(f"{num} = 0x{num:x}")
