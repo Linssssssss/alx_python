@@ -5,4 +5,4 @@ def pow(a, b):
         b = -b
     for _ in range(b):
         result *= a
-    return result
+    return round(result, 2)  # Round the result to 2 decimal places
