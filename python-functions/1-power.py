@@ -3,4 +3,4 @@ def add(a, b):
         carry = a & b
         a = a ^ b
         b = carry << 1
-    return a
+return a
