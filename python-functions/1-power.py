@@ -1,15 +1,11 @@
-import decimal
-
 def pow(a, b):
-    decimal.getcontext().prec = 30  # Set the precision to a sufficient number of decimal places
-    a_decimal = decimal.Decimal(str(a))
-    result = decimal.Decimal('1')
-    
+    result = 1
+
     if b >= 0:
         for _ in range(b):
-            result *= a_decimal
+            result *= a
     else:
         for _ in range(abs(b)):
-            result /= a_decimal
+            result /= a
 
-    return float(result) if b >= 0 else 1.0 / float(result)
+    return result
