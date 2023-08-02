@@ -12,4 +12,4 @@ def pow(a, b):
         for _ in range(abs(b)):
             result /= a_decimal
 
-    return int(result)
+    return float(result) if b >= 0 else 1.0 / float(result)
