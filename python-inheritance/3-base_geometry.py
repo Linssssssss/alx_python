@@ -7,7 +7,4 @@ class BaseGeometry:
 
     Attributes:
     """
-
-    def area(self):
-        """ area method """
-        raise Exception("area() is not implemented")
+    pass
