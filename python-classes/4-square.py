@@ -1,26 +1,43 @@
+#!/usr/bin/python3
+
+"""Class docstrings go here."""
+
+
 class Square:
+    """Class docstrings go here."""
+
     def __init__(self, size=0):
+        """__init__ constructor method."""
         self.size = size
+
+    def area(self):
+        """area that returns the current square area."""
+        return self.__size ** 2
 
     @property
     def size(self):
+        """size to retrieve it."""
         return self.__size
 
     @size.setter
     def size(self, value):
-        if not isinstance(value, int):
+        """setter to set it."""
+        if type(value) is not int:
             raise TypeError("size must be an integer")
-        elif value < 0:
+        if value < 0:
             raise ValueError("size must be >= 0")
-        else:
-            self.__size = value
+        self.__size = value
 
-    def area(self):
-        return self.__size ** 2
 
-    def my_print(self):
-        if self.__size == 0:
-            print()
-            return
-        for _ in range(self.__size):
-            print("#" * self.__size)
+if __name__ == "__main__":
+    my_square = Square(89)
+    print("Area: {} for size: {}".format(my_square.area(), my_square.size))
+
+    my_square.size = 3
+    print("Area: {} for size: {}".format(my_square.area(), my_square.size))
+
+    try:
+        my_square.size = "5 feet"
+        print("Area: {} for size: {}".format(my_square.area(), my_square.size))
+    except Exception as e:
+        print(e)
