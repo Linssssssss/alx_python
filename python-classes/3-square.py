@@ -1,37 +1,72 @@
 #!/usr/bin/python3
-
-"""Class docstrings go here."""
+"""A simple Square class that defines a square by its size."""
 
 
 class Square:
-    """Class docstrings go here."""
+    """A simple Square class that defines a square by its size.
+
+    Attributes:
+        __size (int): The size of the square.
+        Return:
+            int : The area of the square.
+        Raise:
+            TypeError: size must be an integer
+            ValueError: size must be >= 0
+    """
 
     def __init__(self, size=0):
-        """__init__ constructor method."""
-        if type(size) is not int:
+        if type(size) != int:
             raise TypeError("size must be an integer")
         if size < 0:
             raise ValueError("size must be >= 0")
         self.__size = size
 
     def area(self):
-        """area that returns the current square area."""
-        return (self.__size ** 2)
+        """Finds the area of the square.
 
+        Returns:
+            int : The area of the square.
+        """
+        return self.__size ** 2
 
-if __name__ == "__main__":
-    my_square_1 = Square(3)
-    print("Area: {}".format(my_square_1.area()))
+    @property
+    def size(self):
+        """Getter for size.
 
-    try:
-        print(my_square_1.size)
-    except Exception as e:
-        print(e)
+        Returns:
+            int : The size of the square.
+        """
+        return self.__size
 
-    try:
-        print(my_square_1.__size)
-    except Exception as e:
-        print(e)
+    @size.setter
+    def size(self, value):
+        """Setter for size.
 
-    my_square_2 = Square(5)
-    print("Area: {}".format(my_square_2.area()))
+        Returns:
+            int : The Value of the size.
+            Raises:
+                TypeError: If size is not an integer.
+                ValueError: If size is less than 0.
+            """
+        if type(value) != int:
+            raise TypeError("size must be an integer")
+        if value < 0:
+            raise ValueError("size must be >= 0")
+        self.__size = value
+
+    @size.getter
+    def size(self):
+        """Getter for size.
+
+        Raises:
+            TypeError: If size is not an integer.
+            ValueError: If size is less than 0.
+
+        Returns:
+            int : The size of the square.
+        """
+        if type(self.__size) != int:
+            raise TypeError("size must be an integer")
+        if self.__size < 0:
+            raise ValueError("size must be >= 0")
+        return self.__size
