@@ -1,8 +1,7 @@
 #!/usr/bin/python3
+"""Empty class that defines a square"""
 
-"""Class docstrings go here."""
 
-
-class Square:
-    """Class docstrings go here."""
+class Square():
+    """square class"""
     pass
