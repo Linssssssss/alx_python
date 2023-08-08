@@ -1,10 +1,10 @@
 #!/usr/bin/python3
-"""The BaseGeometry module"""
+"""an empty class"""
 
 
 class BaseGeometry:
-    """Defines the BaseGeometry class"""
+    """empty class"""
 
     def area(self):
-        """The area method"""
+        """raise an exception"""
         raise Exception("area() is not implemented")
