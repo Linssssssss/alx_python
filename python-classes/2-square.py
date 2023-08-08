@@ -1,49 +1,55 @@
 #!/usr/bin/python3
-
-"""Class docstrings go here."""
+"""A simple Square class that defines a square by its size."""
 
 
 class Square:
-    """Class docstrings go here."""
+    """A simple Square class that defines a square by its size.
+
+    Attributes:
+        __size (int): The size of the square.
+        Return:
+            int : The area of the square.
+        Raise:
+            TypeError: size must be an integer
+            ValueError: size must be >= 0
+    """
 
     def __init__(self, size=0):
-        """__init__ constructor method."""
-        if type(size) is not int:
+        if type(size) != int:
             raise TypeError("size must be an integer")
         if size < 0:
             raise ValueError("size must be >= 0")
         self.__size = size
 
+    def area(self):
+        """Finds the area of the square.
 
-if __name__ == "__main__":
-    my_square_1 = Square(3)
-    print(type(my_square_1))
-    print(my_square_1.__dict__)
+        Returns:
+            int : The area of the square.
+        """
+        return self.__size ** 2
 
-    my_square_2 = Square()
-    print(type(my_square_2))
-    print(my_square_2.__dict__)
+    @property
+    def size(self):
+        """Getter for size.
 
-    try:
-        print(my_square_1.size)
-    except Exception as e:
-        print(e)
+        Returns:
+            int : The size of the square.
+        """
+        return self.__size
 
-    try:
-        print(my_square_1.__size)
-    except Exception as e:
-        print(e)
+    @size.setter
+    def size(self, value):
+        """Setter for size.
 
-    try:
-        my_square_3 = Square("3")
-        print(type(my_square_3))
-        print(my_square_3.__dict__)
-    except Exception as e:
-        print(e)
-
-    try:
-        my_square_4 = Square(-89)
-        print(type(my_square_4))
-        print(my_square_4.__dict__)
-    except Exception as e:
-        print(e)
+        Returns:
+            int : The Value of the size.
+            Raises:
+                TypeError: If size is not an integer.
+                ValueError: If size is less than 0.
+            """
+        if type(value) != int:
+            raise TypeError("size must be an integer")
+        if value < 0:
+            raise ValueError("size must be >= 0")
+        self.__size = value
