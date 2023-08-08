@@ -1,4 +1,8 @@
 #!/usr/bin/python3
 
-class square:
+"""Class docstrings go here."""
+
+
+class Square:
+    """Class docstrings go here."""
     pass
