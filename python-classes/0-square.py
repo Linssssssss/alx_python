@@ -1,8 +1,11 @@
 #!/usr/bin/python3
-
-"""Class docstrings go here."""
+"""
+Module for Square class
+"""
 
 
 class Square:
-    """Class docstrings go here."""
+    """
+    empty Square class
+    """
     pass
