@@ -5,4 +5,5 @@ Module contains the `BaseGeometry` class
 
 
 class BaseGeometry():
+    """ Class is empty """
     pass
