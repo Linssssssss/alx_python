@@ -1,16 +1,10 @@
 #!/usr/bin/python3
-"""
-Module contains the `BaseGeometry` class
-"""
+""" class BaseGeometry """
 
 
-class BaseGeometry():
-    """
-    The BaseGeometry class
-    """
+class BaseGeometry:
+    """ constructor """
 
     def area(self):
-        """
-        raises the exception
-        """
-        raise Exception("area() is not implemented")
+        """ function """
+        raise Exception('area() is not implemented')
