@@ -1,7 +1,8 @@
 #!/usr/bin/python3
-"""an empty class"""
+"""
+Module contains the `BaseGeometry` class
+"""
 
 
-class BaseGeometry:
-    """empty class"""
+class BaseGeometry():
     pass
