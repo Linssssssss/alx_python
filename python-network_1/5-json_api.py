@@ -1,25 +1,27 @@
 #!/usr/bin/python3
 """
-Script
+Python script that sends a POST request to the URL and
+to an URL with the letter as a parameter
 """
+import requests
+import sys
 
 
 if __name__ == "__main__":
-    """request"""
-    import requests
-    from sys import argv
-    if len(argv) == 2:
-        q = argv[1]
-    else:
-        q = ""
-    res = requests.post('http://0.0.0.0:5000/search_user', data={'q': q})
+    data = {'q': ""}
+
     try:
-        r_dict = res.json()
-        id = r_dict.get('id')
-        name = r_dict.get('name')
-        if len(r_dict) == 0 or not id or not name:
+        data['q'] = sys.argv[1]
+    except:
+        pass
+
+    r = requests.post('http://0.0.0.0:5000/search_user', data)
+
+    try:
+        json_o = r.json()
+        if not json_o:
             print("No result")
         else:
-            print("[{}] {}".format(r_dict.get('id'), r_dict.get('name')))
-    except Exception:
+            print("[{}] {}".format(json_o.get('id'), json_o.get('name')))
+    except:
         print("Not a valid JSON")
