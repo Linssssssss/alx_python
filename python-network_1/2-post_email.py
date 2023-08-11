@@ -1,16 +1,16 @@
-#!/usr/bin/python3
-"""
-Script that takes in a URL
-"""
+#!/usr/bin/env python3
+import requests  # Import the requests module for making HTTP requests
+import sys      # Import the sys module for accessing command-line arguments
 
+# Get the URL and email from the command-line arguments
+url = sys.argv[1]
+email = sys.argv[2]
 
-if __name__ == "__main__":
-    """request"""
-    import urllib.parse as parse
-    import urllib.request as request
-    from sys import argv
-    values = {'email': argv[2]}
-    data = parse.urlencode(values).encode('utf-8')
-    req = request.Request(argv[1], data)
-    with request.urlopen(req) as res:
-        print(res.read().decode('utf-8'))
+# Create a dictionary containing the email parameter
+data = {'email': email}
+
+# Make an HTTP POST request to the URL with the email parameter
+response = requests.post(url, data=data)
+
+# Display the body of the response
+print(response.text)
