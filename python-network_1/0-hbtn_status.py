@@ -1,19 +1,15 @@
-#!/usr/bin/python3
-""" Python script that fetches https://alu-intranet.hbtn.io/status """
-from urllib.request import urlopen, Request
+#!/usr/bin/env python3
+import requests  # Import the requests module for making HTTP requests
 
+# URL to fetch
+url = 'https://alu-intranet.hbtn.io/status'
 
-def main():
-    """Make HTTP request to URL"""
-    req = Request('https://alu-intranet.hbtn.io/status')
-    with urlopen(req) as response:
-        content = response.read()
+# Make an HTTP GET request to the URL
+response = requests.get(url)
 
-    print("Body response:")
-    print(f"\t- type: {type(content)}")
-    print(f"\t- content: {content}")
-    print(f"\t- utf8 content: {content.decode('utf-8')}")
-
-
-if __name__ == '__main__':
-    main()
+# Display the body response in the specified format
+print("Body response:")
+# Display the type of the response content
+print("\t- type: {}".format(type(response.text)))
+# Display the content of the response
+print("\t- content: {}".format(response.text))
