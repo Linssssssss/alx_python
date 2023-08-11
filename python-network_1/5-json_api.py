@@ -1,27 +1,27 @@
-#!/usr/bin/python3
-"""
-Python script that sends a POST request to the URL and
-to an URL with the letter as a parameter
-"""
-import requests
-import sys
+#!/usr/bin/env python3
+import requests  # Import the requests module for making HTTP requests
+import sys      # Import the sys module for accessing command-line arguments
 
+# Get the letter from the command-line argument, or set it to an empty string if not provided
+letter = sys.argv[1] if len(sys.argv) > 1 else ""
 
-if __name__ == "__main__":
-    data = {'q': ""}
+# URL for the POST request
+url = 'http://0.0.0.0:5000/search_user'
 
-    try:
-        data['q'] = sys.argv[1]
-    except:
-        pass
+# Create a dictionary containing the letter parameter
+data = {'q': letter}
 
-    r = requests.post('http://0.0.0.0:5000/search_user', data)
+# Make an HTTP POST request to the URL with the letter parameter
+response = requests.post(url, data=data)
 
-    try:
-        json_o = r.json()
-        if not json_o:
-            print("No result")
-        else:
-            print("[{}] {}".format(json_o.get('id'), json_o.get('name')))
-    except:
-        print("Not a valid JSON")
+# Try to parse the response body as JSON
+try:
+    json_data = response.json()
+    # Check if the JSON data is empty
+    if not json_data:
+        print("No result")
+    else:
+        print("[{}] {}".format(json_data['id'], json_data['name']))
+# Handle cases where the response is not valid JSON
+except ValueError:
+    print("Not a valid JSON")
