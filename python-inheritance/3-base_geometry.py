@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-# Define an empty class called BaseGeometry
+""" empty class BaseGeometry """
 class BaseGeometry:
-    """ Empty class"""
+    """ class """
     pass
