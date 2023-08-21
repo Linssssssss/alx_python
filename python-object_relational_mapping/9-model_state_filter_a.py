@@ -26,6 +26,9 @@ if __name__ == "__main__":
         )
     )
 
+    # Bind the engine to the Base class
+    Base.metadata.bind = engine
+
     # Creating a session
     Session = sessionmaker(bind=engine)
     session = Session()
@@ -37,10 +40,3 @@ if __name__ == "__main__":
         .order_by(State.id)
         .all()
     )
-
-    # Displaying the results
-    for state in states_with_a:
-        print("{}: {}".format(state.id, state.name))
-
-    # Closing the session
-    session.close()
