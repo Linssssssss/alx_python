@@ -31,7 +31,3 @@ if __name__ == "__main__":
 
     # Query all State objects from the database and sort by states.id
     states = session.query(State).order_by(State.id).all()
-
-    # Print the results
-    for state in states:
-        print(f"{state.id}: {state.name}")
