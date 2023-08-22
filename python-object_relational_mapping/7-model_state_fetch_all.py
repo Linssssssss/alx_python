@@ -1,34 +1,35 @@
 #!/usr/bin/python3
-""" lists all State objects from the database hbtn_0e_6_usa
-using SQLAlchemy """
+"""Lists all State objects from the database hbtn_0e_6_usa."""
+
 import sys
 from sqlalchemy import create_engine
-from sqlalchemy.sql import select
+from sqlalchemy.orm import sessionmaker
 from model_state import Base, State
 
+if __name__ == "__main__":
+    # Check if the correct number of arguments is provided
+    if len(sys.argv) != 4:
+        print("Usage: {} <mysql username> <mysql password> <database name>".format(
+            sys.argv[0]))
+        sys.exit(1)
 
-def main():
-    """main function """
-
-    dialect = 'mysql'
-    driver = 'mysqldb'
+    # Get MySQL username, password, and database name from command line arguments
     username = sys.argv[1]
     password = sys.argv[2]
-    host = 'localhost'
-    port = '3306'
     database = sys.argv[3]
-    engine = create_engine("{}+{}://{}:{}@{}:{}/{}".format(dialect,
-                                                           driver,
-                                                           username,
-                                                           password,
-                                                           host,
-                                                           port,
-                                                           database))
-    with engine.connect() as conn:
-        rs = conn.execute('SELECT * FROM states ORDER BY id ASC')
-        for r in rs:
-            print("{}: {}".format(r[0], r[1]))
 
+    # Create engine to connect to the database
+    engine = create_engine('mysql+mysqldb://{}:{}@localhost:3306/{}'.format(username, password, database),
+                           pool_pre_ping=True)
 
-if __name__ == "__main__":
-    main()
+    # Create a session to interact with the database
+    Session = sessionmaker(bind=engine)
+    session = Session()
+
+    # Retrieve and display State objects from the database, sorted by states.id
+    states = session.query(State).order_by(State.id).all()
+    for state in states:
+        print("{}: {}".format(state.id, state.name))
+
+    # Close the session
+    session.close()
