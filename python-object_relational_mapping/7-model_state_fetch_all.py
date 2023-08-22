@@ -17,10 +17,8 @@ if __name__ == "__main__":
     database_name = sys.argv[3]
 
     # Create an engine to connect to the database
-    engine = create_engine(
-        f'mysql+mysqldb://{mysql_username}:{mysql_password}@localhost:3306/{database_name}',
-        pool_pre_ping=True
-    )
+    connection_url = f"mysql+mysqldb://{mysql_username}:{mysql_password}@localhost:3306/{database_name}"
+    engine = create_engine(connection_url, pool_pre_ping=True)
 
     # Bind the engine to the Base class
     Base.metadata.create_all(engine)
@@ -31,3 +29,7 @@ if __name__ == "__main__":
 
     # Query all State objects from the database and sort by states.id
     states = session.query(State).order_by(State.id).all()
+
+    # Print the results
+    for state in states:
+        print(f"{state.id}: {state.name}")
