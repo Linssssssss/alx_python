@@ -16,16 +16,12 @@ if __name__ == "__main__":
     mysql_password = sys.argv[2]
     database_name = sys.argv[3]
 
-    # Create an engine to connect to the MySQL server
     engine_url = "mysql+mysqldb://{}:{}@localhost:3306/{}".format(
         mysql_username, mysql_password, database_name)
     engine = create_engine(engine_url)
 
-    # Create a session
     Session = sessionmaker(bind=engine)
     session = Session()
-
-    # Query and print State objects in ascending order by states.id
     states = session.query(State).order_by(State.id).all()
     for state in states:
         print("{}: {}".format(state.id, state.name))
