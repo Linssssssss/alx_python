@@ -1,48 +1,31 @@
-import requests
 import json
+import re
+import requests
+import sys
 
 
-def get_employee_todo_progress(employee_id):
-    # Define the base URL for the JSONPlaceholder API
-    base_url = "https://jsonplaceholder.typicode.com"
+API_URL = 'https://jsonplaceholder.typicode.com'
+"""The API's URL."""
 
-    # Construct the URLs for employee details and TODO items
-    employee_url = f"{base_url}/users/{employee_id}"
-    todo_url = f"{base_url}/users/{employee_id}/todos"
 
-    try:
-        # Fetch employee details
-        employee_response = requests.get(employee_url)
-        employee_data = employee_response.json()
-
-        # Fetch TODO items for the employee
-        todo_response = requests.get(todo_url)
-        todo_data = todo_response.json()
-
-        # Create a JSON data structure
-        json_data = {
-            "USER_ID": [
-                {
-                    "task": task['title'],
-                    "completed": task['completed'],
-                    "username": employee_data['username']
+if __name__ == '__main__':
+    if len(sys.argv) > 1:
+        if re.fullmatch(r'\d+', sys.argv[1]):
+            id = int(sys.argv[1])
+            user_res = requests.get('{}/users/{}'.format(API_URL, id)).json()
+            todos_res = requests.get('{}/todos'.format(API_URL)).json()
+            user_name = user_res.get('username')
+            todos = list(filter(lambda x: x.get('userId') == id, todos_res))
+            with open('{}.json'.format(id), 'w') as file:
+                user_data = list(map(
+                    lambda x: {
+                        'task': x.get('title'),
+                        'completed': x.get('completed'),
+                        'username': user_name
+                    },
+                    todos
+                ))
+                users_data = {
+                    '{}'.format(id): user_data
                 }
-                for task in todo_data
-            ]
-        }
-
-        # Create a JSON file for the employee
-        filename = f"{employee_id}.json"
-        with open(filename, 'w') as json_file:
-            json.dump(json_data, json_file, indent=4)
-
-        # Print a message to indicate that the JSON file has been created
-        print(f"JSON file '{filename}' created successfully.")
-
-    except requests.exceptions.RequestException as e:
-        print(f"Error: {e}")
-
-
-if __name__ == "__main__":
-    employee_id = int(input("Enter the employee ID: "))
-    get_employee_todo_progress(employee_id)
+                json.dump(users_data, file)
