@@ -1,4 +1,5 @@
 import requests
+import sys
 
 
 def get_employee_todo_progress(employee_id):
@@ -7,7 +8,7 @@ def get_employee_todo_progress(employee_id):
 
     # Construct the URLs for employee details and TODO items
     employee_url = f"{base_url}/users/{employee_id}"
-    todo_url = f"{base_url}/users/{employee_id}/todos"
+    todo_url = f"{base_url}/todos?userId={employee_id}"
 
     try:
         # Fetch employee details
@@ -31,12 +32,16 @@ def get_employee_todo_progress(employee_id):
 
         # Print the titles of completed tasks
         for task in completed_tasks:
-            print(f"\t{task['title']}")
+            print(f"    {task['title']}")
 
     except requests.exceptions.RequestException as e:
         print(f"Error: {e}")
 
 
 if __name__ == "__main__":
-    employee_id = int(input("Enter the employee ID: "))
+    if len(sys.argv) != 2:
+        print("Usage: python3 gather_data_from_an_API.py <employee_id>")
+        sys.exit(1)
+
+    employee_id = int(sys.argv[1])
     get_employee_todo_progress(employee_id)
