@@ -60,4 +60,4 @@ with open(csv_filename, mode='w', newline='') as csv_file:
                             task_completed_status, task_title])
 
 # Print a message indicating the CSV file has been created
-print(f"Data exported to {csv_filename}")
+print(f"Data exported to {'USER_ID.csv'}")
