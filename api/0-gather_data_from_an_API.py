@@ -1,47 +1,52 @@
 import requests
 import sys
 
+# Check if the correct number of command-line arguments is provided
+if len(sys.argv) != 2:
+    print("Usage: python3 0-gather_data_from_an_API.py <employee_id>")
+    sys.exit(1)
 
-def get_employee_todo_progress(employee_id):
-    # Define the base URL for the JSONPlaceholder API
-    base_url = "https://jsonplaceholder.typicode.com"
+# Get the employee ID from the command-line argument
+employee_id = int(sys.argv[1])
 
-    # Construct the URLs for employee details and TODO items
-    employee_url = f"{base_url}/users/{employee_id}"
-    todo_url = f"{base_url}/todos?userId={employee_id}"
+# Define the base URL for the JSONPlaceholder API
+base_url = "https://jsonplaceholder.typicode.com"
 
-    try:
-        # Fetch employee details
-        employee_response = requests.get(employee_url)
-        employee_data = employee_response.json()
+# Create URLs for getting employee details and TODO list
+employee_url = f"{base_url}/users/{employee_id}"
+todo_url = f"{base_url}/users/{employee_id}/todos"
 
-        # Fetch TODO items for the employee
-        todo_response = requests.get(todo_url)
-        todo_data = todo_response.json()
+# Send GET requests to the API
+employee_response = requests.get(employee_url)
+todo_response = requests.get(todo_url)
 
-        # Calculate the number of completed tasks
-        completed_tasks = [task for task in todo_data if task['completed']]
-        num_completed_tasks = len(completed_tasks)
+# Check if the responses are successful
+if employee_response.status_code != 200:
+    print(
+        f"Error: Unable to retrieve employee details (Status Code: {employee_response.status_code})")
+    sys.exit(1)
 
-        # Calculate the total number of tasks
-        total_num_tasks = len(todo_data)
+if todo_response.status_code != 200:
+    print(
+        f"Error: Unable to retrieve TODO list (Status Code: {todo_response.status_code})")
+    sys.exit(1)
 
-        # Print employee TODO list progress in the specified format
-        print(
-            f"Employee {employee_data['name']} is done with tasks ({num_completed_tasks}/{total_num_tasks}):")
+# Parse JSON responses
+employee_data = employee_response.json()
+todo_data = todo_response.json()
 
-        # Print the titles of completed tasks
-        for task in completed_tasks:
-            print(f"    {task['title']}")
+# Extract employee name
+employee_name = employee_data['name']
 
-    except requests.exceptions.RequestException as e:
-        print(f"Error: {e}")
+# Calculate the number of completed and total tasks
+total_tasks = len(todo_data)
+completed_tasks = sum(1 for task in todo_data if task['completed'])
 
+# Display employee TODO list progress
+print(
+    f"Employee {employee_name} is done with tasks({completed_tasks}/{total_tasks}):")
 
-if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage: python3 gather_data_from_an_API.py <employee_id>")
-        sys.exit(1)
-
-    employee_id = int(sys.argv[1])
-    get_employee_todo_progress(employee_id)
+# Display titles of completed tasks
+for task in todo_data:
+    if task['completed']:
+        print(f"    {task['title']}")
