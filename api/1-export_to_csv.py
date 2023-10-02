@@ -4,7 +4,7 @@ import csv
 
 # Check if the correct number of command-line arguments is provided
 if len(sys.argv) != 2:
-    print("Usage: python3 export_to_CSV.py <employee_id>")
+    print("Usage: python3 1-export_to_CSV.py <employee_id>")
     sys.exit(1)
 
 # Get the employee ID from the command-line argument
