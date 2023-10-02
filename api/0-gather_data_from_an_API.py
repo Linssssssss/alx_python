@@ -1,52 +1,27 @@
+import re
 import requests
 import sys
 
-# Check if the correct number of command-line arguments is provided
-if len(sys.argv) != 2:
-    print("Usage: python3 0-gather_data_from_an_API.py <employee_id>")
-    sys.exit(1)
 
-# Get the employee ID from the command-line argument
-employee_id = int(sys.argv[1])
+API_URL = 'https://jsonplaceholder.typicode.com'
+"""The API's URL."""
 
-# Define the base URL for the JSONPlaceholder API
-base_url = "https://jsonplaceholder.typicode.com"
 
-# Create URLs for getting employee details and TODO list
-employee_url = f"{base_url}/users/{employee_id}"
-todo_url = f"{base_url}/users/{employee_id}/todos"
-
-# Send GET requests to the API
-employee_response = requests.get(employee_url)
-todo_response = requests.get(todo_url)
-
-# Check if the responses are successful
-if employee_response.status_code != 200:
-    print(
-        f"Error: Unable to retrieve employee details (Status Code: {employee_response.status_code})")
-    sys.exit(1)
-
-if todo_response.status_code != 200:
-    print(
-        f"Error: Unable to retrieve TODO list (Status Code: {todo_response.status_code})")
-    sys.exit(1)
-
-# Parse JSON responses
-employee_data = employee_response.json()
-todo_data = todo_response.json()
-
-# Extract employee name
-employee_name = employee_data['name']
-
-# Calculate the number of completed and total tasks
-total_tasks = len(todo_data)
-completed_tasks = sum(1 for task in todo_data if task['completed'])
-
-# Display employee TODO list progress
-print(
-    f"Employee {employee_name} is done with tasks({completed_tasks}/{total_tasks}):")
-
-# Display titles of completed tasks with correct formatting
-for task in todo_data:
-    if task['completed']:
-        print(f"\t{task['title']}")
+if __name__ == '__main__':
+    if len(sys.argv) > 1:
+        if re.fullmatch(r'\d+', sys.argv[1]):
+            id = int(sys.argv[1])
+            user_res = requests.get('{}/users/{}'.format(API_URL, id)).json()
+            todos_res = requests.get('{}/todos'.format(API_URL)).json()
+            user_name = user_res.get('name')
+            todos = list(filter(lambda x: x.get('userId') == id, todos_res))
+            todos_done = list(filter(lambda x: x.get('completed'), todos))
+            print(
+                'Employee {} is done with tasks({}/{}):'.format(
+                    user_name,
+                    len(todos_done),
+                    len(todos)
+                )
+            )
+            for todo_done in todos_done:
+                print('\t {}'.format(todo_done.get('title')))
