@@ -46,7 +46,7 @@ completed_tasks = sum(1 for task in todo_data if task['completed'])
 print(
     f"Employee {employee_name} is done with tasks({completed_tasks}/{total_tasks}):")
 
-# Display titles of completed tasks
+# Display titles of completed tasks with correct formatting
 for task in todo_data:
     if task['completed']:
-        print(f"    {task['title']}")
+        print(f"\t{task['title']}")
