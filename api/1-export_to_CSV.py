@@ -1,6 +1,7 @@
-import requests
 import csv
+import requests
 import sys
+
 
 def get_employee_info(employee_id):
     # Define the API URLs for employee details and TODO list
@@ -29,14 +30,17 @@ def get_employee_info(employee_id):
     filename = f"{user_id}.csv"
     with open(filename, mode="w", newline="") as csv_file:
         csv_writer = csv.writer(csv_file)
-        csv_writer.writerow(["USER_ID", "USERNAME", "TASK_COMPLETED_STATUS", "TASK_TITLE"])
+        csv_writer.writerow(
+            ["USER_ID", "USERNAME", "TASK_COMPLETED_STATUS", "TASK_TITLE"])
 
         for task in todo_list:
             task_completed_status = "True" if task["completed"] else "False"
             task_title = task["title"]
-            csv_writer.writerow([user_id, username, task_completed_status, task_title])
+            csv_writer.writerow(
+                [user_id, username, task_completed_status, task_title])
 
     print(f"Data exported to {filename}.")
+
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
