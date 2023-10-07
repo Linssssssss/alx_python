@@ -1,31 +1,38 @@
 #!/usr/bin/python3
-""" Python script to export data in the JSON format."""
+"""
+Request from API; Return TODO list progress of all employees
+Export this data to JSON
+"""
 import json
 import requests
-import sys
+
+
+def all_to_json():
+    """return API data"""
+    USERS = []
+    userss = requests.get("http://jsonplaceholder.typicode.com/users")
+    for u in userss.json():
+        USERS.append((u.get('id'), u.get('username')))
+    TASK_STATUS_TITLE = []
+    todos = requests.get("http://jsonplaceholder.typicode.com/todos")
+    for t in todos.json():
+        TASK_STATUS_TITLE.append((t.get('userId'),
+                                  t.get('completed'),
+                                  t.get('title')))
+
+    """export to json"""
+    data = dict()
+    for u in USERS:
+        t = []
+        for task in TASK_STATUS_TITLE:
+            if task[0] == u[0]:
+                t.append({"task": task[2], "completed": task[1],
+                          "username": u[1]})
+        data[str(u[0])] = t
+    filename = "todo_all_employees.json"
+    with open(filename, "w") as f:
+        json.dump(data, f, sort_keys=True)
 
 
 if __name__ == "__main__":
-    url = 'https://jsonplaceholder.typicode.com/'
-
-    user = '{}users'.format(url)
-    res = requests.get(user)
-    json_o = res.json()
-    d_task = {}
-    for user in json_o:
-        name = user.get('username')
-        userid = user.get('id')
-        todos = '{}todos?userId={}'.format(url, userid)
-        res = requests.get(todos)
-        tasks = res.json()
-        l_task = []
-        for task in tasks:
-            dict_task = {"username": name,
-                         "task": task.get('title'),
-                         "completed": task.get('completed')}
-            l_task.append(dict_task)
-
-        d_task[str(userid)] = l_task
-    filename = 'todo_all_employees.json'
-    with open(filename, mode='w') as f:
-        json.dump(d_task, f)
+    all_to_json()
