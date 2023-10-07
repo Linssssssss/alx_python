@@ -41,6 +41,14 @@ def get_employee_info(employee_id):
 
     print(f"Data exported to {filename}.")
 
+    # Count the number of tasks in the CSV file
+    with open(filename, mode="r") as csv_file:
+        csv_reader = csv.reader(csv_file)
+        # Subtract 1 to exclude the header row
+        task_count = sum(1 for _ in csv_reader) - 1
+
+    print(f"Number of tasks in CSV: {task_count}")
+
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
