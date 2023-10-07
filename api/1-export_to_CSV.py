@@ -1,38 +1,43 @@
 #!/usr/bin/python3
-"""
-Request from API; Return TODO list progress given employee ID
-Export this data to CSV
-"""
+# script to gather todo data from an API and write to CSV file
 import csv
 import requests
-from sys import argv
+import sys
 
 
-def to_csv():
-    """return API data"""
-    users = requests.get("http://jsonplaceholder.typicode.com/users")
-    for u in users.json():
-        if u.get('id') == int(argv[1]):
-            USERNAME = (u.get('username'))
-            break
-    TASK_STATUS_TITLE = []
-    todos = requests.get("http://jsonplaceholder.typicode.com/todos")
-    for t in todos.json():
-        if t.get('userId') == int(argv[1]):
-            TASK_STATUS_TITLE.append((t.get('completed'), t.get('title')))
-
-    """export to csv"""
-    filename = "{}.csv".format(argv[1])
-    with open(filename, "w") as csvfile:
-        fieldnames = ["USER_ID", "USERNAME",
-                      "TASK_COMPLETED_STATUS", "TASK_TITLE"]
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames,
-                                quoting=csv.QUOTE_ALL)
-        for task in TASK_STATUS_TITLE:
-            writer.writerow({"USER_ID": argv[1], "USERNAME": USERNAME,
-                             "TASK_COMPLETED_STATUS": task[0],
-                             "TASK_TITLE": task[1]})
+def get_username(base_url, user_id):
+    """Gets username
+       Args:
+           base_url (str): base url for API
+           user_id (str): user id number
+       Returns: username
+    """
+    response = requests.get(
+        "{}users/{}".format(base_url, user_id))
+    usr_dict = response.json()
+    return usr_dict['username']
 
 
-if __name__ == "__main__":
-    to_csv()
+def get_todo_list(base_url, user_id):
+    """Gets todo list
+       Args:
+           base_url (str): base url for API
+           user_id (str): user id number
+       Returns: list of todo items (dicts)
+    """
+    response = requests.get(
+        "{}users/{}/todos".format(base_url, user_id))
+    return response.json()
+
+
+if __name__ == '__main__':
+    user_id = sys.argv[1]
+    base_url = 'https://jsonplaceholder.typicode.com/'
+
+    uname = get_username(base_url, user_id)
+    todo_list = get_todo_list(base_url, user_id)
+
+    with open('{}.csv'.format(user_id), 'w') as csvfile:
+        writer = csv.writer(csvfile, quoting=csv.QUOTE_ALL)
+        for todo in todo_list:
+            writer.writerow([user_id, uname, todo['completed'], todo['title']])
