@@ -26,7 +26,7 @@ def get_employee_info(employee_id):
 
     todo_list = todo_response.json()
 
-    # Write data to CSV file with uppercase USER_ID
+    # Write data to CSV file
     filename = f"{user_id}.csv"
     with open(filename, mode="w", newline="") as csv_file:
         csv_writer = csv.writer(csv_file)
@@ -40,14 +40,6 @@ def get_employee_info(employee_id):
                 [user_id, username, task_completed_status, task_title])
 
     print(f"Data exported to {filename}.")
-
-    # Count the number of tasks in the CSV file
-    with open(filename, mode="r") as csv_file:
-        csv_reader = csv.reader(csv_file)
-        # Subtract 1 to exclude the header row
-        task_count = sum(1 for _ in csv_reader) - 1
-
-    print(f"Number of tasks in CSV: {task_count}")
 
 
 if __name__ == "__main__":
