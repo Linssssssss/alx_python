@@ -18,5 +18,4 @@ if __name__ == '__main__':
         taskwriter = csv.writer(csvfile, quoting=csv.QUOTE_ALL)
         for t in todo:
             taskwriter.writerow([int(uid), user.get('username'),
-                                 t.get('completed'),
                                  t.get('title')])
